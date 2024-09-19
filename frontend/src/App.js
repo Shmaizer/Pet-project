@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
 
 function App() {
   const [data, setData] = useState(null);
@@ -13,17 +12,11 @@ function App() {
   
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
+    <p>
           {
             !data ? "loading...." : data
           }
         </p>
-      </header>
-      
-    </div>
     
   );
 }
