@@ -1,12 +1,13 @@
 const Router = require('express')
 const router = new Router()
 const userController = require('../controller/user.controller')
-const cheackAuth = require('../middleware/checkAuth')
+const checkAuth = require('../middleware/checkAuth')
+
 router.post('/register',userController.createUser)
 router.post('/login',userController.loginUser)
-router.post('/user/:id',cheackAuth,userController.getOneUser)
-router.post('/user',userController.updateUser)
-router.post('/user/:id',userController.deleteUser)
+router.get('/user/:id',checkAuth,userController.getUserDate)
+router.put('/user',userController.updateUser)
+router.delete('/user/:id',userController.deleteUser)
 
 
 

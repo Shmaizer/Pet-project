@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 
-export const cheackAuth = (req,res,next)=>{
+module.exports = (req,res,next)=>{
     const token = (req.headers.authorization || '').replace(/Bearer\s?/i,'')
     if(token){
         try{
