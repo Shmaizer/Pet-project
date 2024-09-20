@@ -6,6 +6,9 @@ const PORT = process.env.PORT || 8080
 const app =express()
 const pool = require('./db');
 const cors = require('cors');
+
+
+
 app.use(cors({
   origin: 'http://localhost:3000' // Разрешить запросы только с этого источника
 }));

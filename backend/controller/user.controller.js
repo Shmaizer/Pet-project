@@ -7,9 +7,15 @@ class UserController{
     async createUser(req,res){
         try{
             const {login,password}=req.body
-            console.log(login+" "+password)
+            console.log(`user.controller.reg Login: ${login} Password: ${password}`)
             if (typeof password !== 'string') {
                 throw new Error('Password must be a string');
+            }
+            const isUsed = await User.findOne({where:{login}})
+            if(isUsed){
+                return res.json({
+                    message: 'Такой логин уже занят.'
+                })
             }
             var salt = bcrypt.genSaltSync(10)
             var hashPass = bcrypt.hashSync(password,salt)
