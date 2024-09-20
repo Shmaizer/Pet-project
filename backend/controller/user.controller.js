@@ -7,24 +7,30 @@ class UserController{
     async createUser(req,res){
         try{
             const {login,password}=req.body
-            // const isUsed = await User.findOne({name})
-            // if(isUsed){
-            //     return res.json({
-            //         message: 'Данный name уже занят'
-            //     })
-            // }
-            
+            console.log(login+" "+password)
+            if (typeof password !== 'string') {
+                throw new Error('Password must be a string');
+            }
             var salt = bcrypt.genSaltSync(10)
             var hashPass = bcrypt.hashSync(password,salt)
             console.log(login,password,hashPass)
-            const newPerson = await User.create({
+            const newUser = await User.create({
                 login: login,
                 password: hashPass
             })
+            const token = jwt.sign({
+                id: newUser.id
+            },
+            process.env.JWT_SECRET,
+            {expiresIn:'30d'}
+        )
             res.status(200).json({
-                message: newPerson
+                newUser,
+                token,
+                message: 'Регистрация прошла успешно.'
             })
         }catch(error){
+            console.error('Error creating user:', error);
             res.status(500).json({
                 message: 'Ошибка при создании пользователя.',
                 error: error.message
@@ -76,10 +82,11 @@ class UserController{
             }
 
             const token = jwt.sign({
-                id: user.id
-            },
-            process.env.JWT_SECRET,
-        {expiresIn:'30d'})
+                    id: user.id
+                },
+                process.env.JWT_SECRET,
+                {expiresIn:'30d'}
+            )
         return res.json({
             token,
             user,

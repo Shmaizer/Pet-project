@@ -7,8 +7,7 @@ const User = db.define('user',
     id: {
       type: DataTypes.UUID,
       defaultValue: uuidv4,
-      primaryKey: true, 
-      autoIncrement: true,
+      primaryKey: true,
       allowNull: false
     },
     login: {

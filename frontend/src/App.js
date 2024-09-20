@@ -1,23 +1,17 @@
-import React, { useEffect, useState } from 'react';
-
-
+import { Layout } from './components/Layout';
+import {Router, Route, Routes} from 'react-router-dom'
+import { MainPage } from './page/MainPage';
+import { LoginPage } from './page/LoginPage';
+import { RegisterPage } from './page/RegisterPage';
 function App() {
-  const [data, setData] = useState(null);
-  // получение GET маршрута с сервера Express, который соответствует GET из server.js 
-  useEffect(() => {
-    fetch('/api')
-    .then(response=>response.json())
-    .then(response=>setData(response.message))
-  }, [])
-  
-
   return (
-    <p>
-          {
-            !data ? "loading...." : data
-          }
-        </p>
-    
+  <Layout>
+    <Routes>
+      <Route path='/' element={<MainPage />}/>
+      <Route path='/login' element={<LoginPage />}/>
+      <Route path='/register' element={<RegisterPage />}/>
+    </Routes>
+    </Layout>
   );
 }
 
